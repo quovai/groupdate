@@ -14,11 +14,11 @@ module Groupdate
         @n_seconds = n_seconds
 
         if ActiveRecord::VERSION::MAJOR >= 7
-          if ActiveRecord.default_timezone == :local
+          if ActiveRecord.default_timezone == :local && !ENV['IGNORE_TIMEZONE_UTC']
             raise Groupdate::Error, "ActiveRecord.default_timezone must be :utc to use Groupdate"
           end
         else
-          if relation.default_timezone == :local
+          if relation.default_timezone == :local && !ENV['IGNORE_TIMEZONE_UTC']
             raise Groupdate::Error, "ActiveRecord::Base.default_timezone must be :utc to use Groupdate"
           end
         end
